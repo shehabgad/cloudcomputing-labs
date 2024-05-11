@@ -2,7 +2,7 @@ import { db } from '../firebase'
 import { collection, addDoc, query, where, getDocs, deleteDoc } from 'firebase/firestore';
 
 export const writeInDb = async (userId, fileName, fileUrl) => {
-  const docRef = await addDoc(collection(db, "files"), {
+  await addDoc(collection(db, "files"), {
     user_id: userId,
     file_name: fileName,
     file_url: fileUrl

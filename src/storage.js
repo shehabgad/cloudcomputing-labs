@@ -1,5 +1,5 @@
 import { storage } from "./firebase";
-import { ref, getMetadata, getDownloadURL, uploadBytes, listAll, refFromURL, deleteObject } from 'firebase/storage'
+import { ref, getMetadata, getDownloadURL, uploadBytes, listAll, deleteObject } from 'firebase/storage'
 
 export const downloadFile = async (userId, fileName, setFileUrl) => {
   const filePath = constructPath(userId, fileName)
@@ -25,7 +25,7 @@ export const downloadAllFiles = async (userId, setAllFilesUrls) => {
       name: fileRef.name
     })
   }
-  if (filesUrls.length == 0) {
+  if (filesUrls.length === 0) {
     alert(`No files with the user ${userId}`)
   }
   setAllFilesUrls(filesUrls)
@@ -33,7 +33,7 @@ export const downloadAllFiles = async (userId, setAllFilesUrls) => {
 export const fileExists = async (filePath) => {
   try {
     const fileRef = ref(storage, filePath)
-    const fileMetaData = await getMetadata(fileRef)
+    await getMetadata(fileRef)
     return true
   } catch (err) {
     if (err.code === 'storage/object-not-found') {

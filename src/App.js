@@ -1,18 +1,12 @@
-import React, { Component, useEffect, useState } from 'react'
-import { generateToken } from './firebase'
-import { onMessage } from 'firebase/messaging';
-import { messaging } from './firebase';
-import { writeNotification, getNotificationsRealtime } from './models/notifications';
-import { fetchAllDataFromDB } from './models/notifications'
-import { downloadFile, uploadFile, downloadAllFiles, deleteFile } from './storage';
-import { writeInDb, readFromDb, readAllFromDb, deleteFileFromDb } from './models/files';
-function App() {
+import React, { useState } from 'react'
+import { uploadFile, downloadAllFiles, deleteFile } from './storage';
+import { writeInDb, readAllFromDb, deleteFileFromDb } from './models/files';
 
-  const [fileUrl, setFileUrl] = useState('')
+function App() {
   const [userId, setUserId] = useState('')
-  const [fileName, setFileName] = useState('')
   const [toBeUploadedFile, setToBeUploadedFile] = useState(null)
   const [allFilesUrls, setAllFilesUrls] = useState([])
+
   const handleUpload = async () => {
     if (!userId || !toBeUploadedFile) {
       alert('User id or file is not entered')
@@ -24,21 +18,9 @@ function App() {
     }
   }
 
-  const handleDownload = () => {
-    if (!userId || !fileName) {
-      alert('User id or file is not entered')
-      return
-    }
-    downloadFile(userId, fileName, setFileUrl)
-  }
 
-  const handleDownloadFromDb = () => {
-    if (!userId || !fileName) {
-      alert('User id or file is not entered')
-      return
-    }
-    readFromDb(userId, fileName, setFileUrl)
-  }
+
+
 
   const handleDownloadAllfiles = () => {
     if (!userId) {
@@ -61,14 +43,14 @@ function App() {
     const newAllFileUrls = allFilesUrls.filter(file => file.url !== file_url)
     setAllFilesUrls(newAllFileUrls)
   }
-  const handleClearfile = () => {
-    setFileUrl("")
-  }
+
   const handleClearAllfiles = () => {
     setAllFilesUrls([])
   }
   return (
     <div>
+      <h1>Welcome</h1>
+      <hr></hr>
       <h4>Enter User ID</h4>
       <input
         type='text'
@@ -84,19 +66,6 @@ function App() {
       />
 
       <button onClick={handleUpload}>Upload</button>
-      <hr></hr>
-      <h4>Enter file name to download</h4>
-      <input
-        type='text'
-        placeholder='file name'
-        value={fileName}
-        onChange={(e) => setFileName(e.target.value)}
-      />
-      <button onClick={handleDownload}>Download</button>
-      <button onClick={handleDownloadFromDb}>Download From Db</button>
-
-      <button onClick={handleClearfile}>Clear file</button>
-      {fileUrl && <img src={fileUrl} alt={fileName} style={{ display: 'block' }} />}
       <hr></hr>
       <button onClick={handleDownloadAllfiles}>Get All files</button>
       <button onClick={handleDownloadAllfilesFromDb}>Get All files From Db</button>
