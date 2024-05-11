@@ -85,7 +85,7 @@ function App() {
 
       <button onClick={handleUpload}>Upload</button>
       <hr></hr>
-      {/* <h4>Enter file name to download</h4>
+      <h4>Enter file name to download</h4>
       <input
         type='text'
         placeholder='file name'
@@ -96,7 +96,7 @@ function App() {
       <button onClick={handleDownloadFromDb}>Download From Db</button>
 
       <button onClick={handleClearfile}>Clear file</button>
-      {fileUrl && <img src={fileUrl} alt={fileName} style={{ display: 'block' }} />} */}
+      {fileUrl && <img src={fileUrl} alt={fileName} style={{ display: 'block' }} />}
       <hr></hr>
       <button onClick={handleDownloadAllfiles}>Get All files</button>
       <button onClick={handleDownloadAllfilesFromDb}>Get All files From Db</button>
